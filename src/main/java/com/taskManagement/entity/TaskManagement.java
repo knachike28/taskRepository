@@ -1,10 +1,9 @@
 package com.taskManagement.entity;
 
+import com.taskManagement.enums.TaskPriority;
+import com.taskManagement.enums.TaskStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
 import java.time.LocalDate;
 
@@ -16,16 +15,14 @@ public class TaskManagement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    @NotBlank(message = "Title is required")
     private String title;
     private String Description;
 
-//    @NotBlank(message = "Status is required")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     private LocalDate dueDate;
 
-//    @NotBlank(message = "Priority is required")
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
 }

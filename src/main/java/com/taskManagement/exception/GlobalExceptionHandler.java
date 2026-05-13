@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 // Used for returning custom HTTP responses
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 // Exception triggered when validation fails
 
@@ -83,5 +84,39 @@ public class GlobalExceptionHandler {
 
         // Returns generic error message
         // HTTP 500 INTERNAL SERVER ERROR
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleEnumValidationException(
+            HttpMessageNotReadableException ex) {
+
+        Map<String, String> error =
+                new HashMap<>();
+
+        String message = ex.getMessage();
+
+        if (message.contains("TaskStatus")) {
+            error.put(
+                    "status",
+                    "Invalid status value. Allowed values: "
+                            + "PENDING, IN_PROGRESS, COMPLETED");
+
+        } else if (message.contains("TaskPriority")) {
+
+            error.put(
+                    "priority",
+                    "Invalid priority value. Allowed values: "
+                            + "LOW, MEDIUM, HIGH");
+
+        } else {
+
+            error.put(
+                    "error",
+                    "Invalid request payload");
+        }
+
+        return new ResponseEntity<>(
+                error,
+                HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,7 +1,10 @@
 package com.taskManagement.dto;
 
 
+import com.taskManagement.enums.TaskPriority;
+import com.taskManagement.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,9 +16,9 @@ public class TaskRequestDTO {
     private String title;
 
     private String Description;
-    @NotBlank(message = "Status is required")
-    private String status;
+    @NotNull(message = "Status is required")
+    private TaskStatus status;
     private LocalDate dueDate;
-    @NotBlank(message = "Priority is required")
-    private String priority;
+    @NotNull(message = "Priority is required")
+    private TaskPriority priority;
 }
