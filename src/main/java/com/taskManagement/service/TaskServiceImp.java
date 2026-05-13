@@ -6,6 +6,8 @@ import com.taskManagement.entity.TaskManagement;
 import com.taskManagement.enums.TaskStatus;
 import com.taskManagement.repository.TaskManagementRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,6 +79,12 @@ public class TaskServiceImp implements TaskService{
         List<TaskManagement> taskManagements= taskRepository.findByStatus(status);
 
         return taskManagements.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<TaskResponseDTO> getAllTasksWithPagination(Pageable pageable) {
+        Page<TaskManagement> taskManagements= taskRepository.findAll(pageable);
+        return taskManagements.map(this:: mapToResponseDTO);
     }
 
     // Convert Entity -> Response DTO

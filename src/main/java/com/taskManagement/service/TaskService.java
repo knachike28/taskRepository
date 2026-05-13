@@ -3,6 +3,8 @@ package com.taskManagement.service;
 import com.taskManagement.dto.TaskRequestDTO;
 import com.taskManagement.dto.TaskResponseDTO;
 import com.taskManagement.enums.TaskStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,5 +21,8 @@ public interface TaskService {
     void deleteTask(Long id);
 
     List<TaskResponseDTO> getTasksByStatus(TaskStatus status);
+
+    Page<TaskResponseDTO> getAllTasksWithPagination(
+            Pageable pageable);
 
 }

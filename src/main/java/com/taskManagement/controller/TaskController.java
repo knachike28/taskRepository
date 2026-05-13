@@ -7,6 +7,8 @@ import com.taskManagement.enums.TaskStatus;
 import com.taskManagement.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +56,13 @@ public class TaskController {
     @GetMapping("/status/{status}")
     public ResponseEntity<List<TaskResponseDTO>> searchTaskByStatus(@PathVariable TaskStatus status){
         List<TaskResponseDTO> tasks= taskService.getTasksByStatus(status);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<TaskResponseDTO>> getAllTasksWithPagination(Pageable pageable) {
+
+        Page<TaskResponseDTO> tasks = taskService.getAllTasksWithPagination(pageable);
         return ResponseEntity.ok(tasks);
     }
 }
