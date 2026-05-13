@@ -17,15 +17,15 @@ public class TaskManagement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Title is required")
+//    @NotBlank(message = "Title is required")
     private String title;
     private String Description;
 
-    @NotBlank(message = "Status is required")
+//    @NotBlank(message = "Status is required")
     private String status;
 
     private LocalDate dueDate;
 
-    @NotBlank(message = "Priority is required")
+//    @NotBlank(message = "Priority is required")
     private String priority;
 }
