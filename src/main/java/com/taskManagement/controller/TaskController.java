@@ -2,6 +2,8 @@ package com.taskManagement.controller;
 
 import com.taskManagement.dto.TaskRequestDTO;
 import com.taskManagement.dto.TaskResponseDTO;
+import com.taskManagement.enums.TaskPriority;
+import com.taskManagement.enums.TaskStatus;
 import com.taskManagement.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +49,11 @@ public class TaskController {
     public ResponseEntity<String>  deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
         return ResponseEntity.ok("Task Deleted successfully");
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<TaskResponseDTO>> searchTaskByStatus(@PathVariable TaskStatus status){
+        List<TaskResponseDTO> tasks= taskService.getTasksByStatus(status);
+        return ResponseEntity.ok(tasks);
     }
 }

@@ -3,6 +3,7 @@ package com.taskManagement.service;
 import com.taskManagement.dto.TaskRequestDTO;
 import com.taskManagement.dto.TaskResponseDTO;
 import com.taskManagement.entity.TaskManagement;
+import com.taskManagement.enums.TaskStatus;
 import com.taskManagement.repository.TaskManagementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,13 @@ public class TaskServiceImp implements TaskService{
         taskRepository.delete(taskManagement);
     }
 
+    @Override
+    public List<TaskResponseDTO> getTasksByStatus(TaskStatus status) {
+        List<TaskManagement> taskManagements= taskRepository.findByStatus(status);
+
+        return taskManagements.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
+    }
+
     // Convert Entity -> Response DTO
     private TaskResponseDTO mapToResponseDTO(TaskManagement taskManagement) {
 
@@ -83,4 +91,5 @@ public class TaskServiceImp implements TaskService{
         dto.setStatus(taskManagement.getStatus());
         return dto;
     }
+
 }
